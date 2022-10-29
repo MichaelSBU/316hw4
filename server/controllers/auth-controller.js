@@ -95,6 +95,7 @@ logoutUser = async (req, res) => {
 }
 
 registerUser = async (req, res) => {
+    console.log("REGISTERING USER IN BACKEND");
     try {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
         console.log("create user: " + firstName + " " + lastName + " " + email + " " + password + " " + passwordVerify);
@@ -136,9 +137,7 @@ registerUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
         console.log("passwordHash: " + passwordHash);
 
-        const newUser = new User({
-            firstName, lastName, email, passwordHash
-        });
+        const newUser = new User({firstName, lastName, email, passwordHash});
         const savedUser = await newUser.save();
         console.log("new user saved: " + savedUser._id);
 
