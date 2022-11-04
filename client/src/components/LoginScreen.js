@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
-
+import MUIErrorModal from './MUIErrorModal'
 import Copyright from './Copyright'
 
 import Avatar from '@mui/material/Avatar';
@@ -28,6 +28,13 @@ export default function LoginScreen() {
         );
 
     };
+
+    let modalJSX = "";
+    console.log(auth);
+    if (auth.errorMessage !== null){
+        modalJSX = <MUIErrorModal />;
+    }
+    console.log(modalJSX);
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -57,7 +64,7 @@ export default function LoginScreen() {
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
@@ -83,10 +90,6 @@ export default function LoginScreen() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
@@ -96,14 +99,9 @@ export default function LoginScreen() {
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="/register/" variant="body2">
+                                    Don't have an account? Sign Up
                                 </Link>
                             </Grid>
                         </Grid>
@@ -111,6 +109,7 @@ export default function LoginScreen() {
                     </Box>
                 </Box>
             </Grid>
+            { modalJSX }
         </Grid>
     );
 }

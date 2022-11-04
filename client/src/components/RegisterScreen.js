@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
+import MUIErrorModal from './MUIErrorModal'
 import Copyright from './Copyright'
 
 import Avatar from '@mui/material/Avatar';
@@ -27,6 +28,13 @@ export default function RegisterScreen() {
             formData.get('passwordVerify')
         );
     };
+
+    let modalJSX = ""
+    console.log(auth);
+    if (auth.errorMessage !== null){
+        modalJSX = <MUIErrorModal />;
+    }
+    console.log(modalJSX);
 
     return (
             <Container component="main" maxWidth="xs">
@@ -119,6 +127,7 @@ export default function RegisterScreen() {
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
+                { modalJSX }
             </Container>
     );
 }

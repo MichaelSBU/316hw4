@@ -37,7 +37,7 @@ export default function MUIRemoveSongModal() {
     }
 
     return (
-        <Modal
+        <Modal maxWidth = {"800vh"} maxHeight = {"400vw"}
             open={store.currentModal == "REMOVE_SONG"}
         >
             <div

@@ -3,17 +3,22 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
-const style = {
+const style1 = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    width: 345,
+    height: 250,
+    backgroundSize: "contain",
+    backgroundImage: `url(https://i.insider.com/602ee9ced3ad27001837f2ac?})`,
+    border: '3px solid #000',
+    padding: '20px',
     boxShadow: 24,
-    p: 4,
 };
 
 export default function MUIDeleteModal() {
@@ -31,27 +36,24 @@ export default function MUIDeleteModal() {
 
     return (
         <Modal
-            open={store.listMarkedForDeletion !== null}
+        open={store.listMarkedForDeletion !== null}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
-                <div className="modal-dialog">
-                <header className="dialog-header">
-                    Delete the {name} Playlist?
-                </header>
-                <div id="confirm-cancel-container">
-                    <button
-                        id="dialog-yes-button"
-                        className="modal-button"
-                        onClick={handleDeleteList}
-                    >Confirm</button>
-                    <button
-                        id="dialog-no-button"
-                        className="modal-button"
-                        onClick={handleCloseModal}
-                    >Cancel</button>
-                </div>
-            </div>
+        <Box sx={style1}>
+            <Typography sx={{fontWeight: 'bold'}} id="modal-modal-title" variant="h4" component="h2">
+                Delete Playlist
+            </Typography>
+            <Divider sx={{p: '10px', transform: 'translate(-5.5%, 0%)', width:368}}/>
+            <Box sx={{background: "rgb(172,79,198,0.05)"}}>
+            <Typography id="modal-modal-description" variant="h6" sx={{color: "#301974" ,fontWeight: 'bold', mt: 2}}>
+                Are you sure you want to delete the <Typography display="inline" id="modal-modal-description" variant="h6" sx={{color: "#820747CF" ,fontWeight: 'bold', mt: 2, textDecoration: 'underline'}}>{name}</Typography> playlist?
+            </Typography>
             </Box>
-        </Modal>
+            <Button sx={{opacity: 0.50, color: "#8932CC", backgroundColor: "#CBC3E3", fontSize: 13, fontWeight: 'bold', border: 2, p:"5px", mt:"50px", mr:"95px"}} variant="outlined" onClick={handleDeleteList}> Confirm </Button>
+            <Button sx={{opacity: 0.50, color: "#8932CC", backgroundColor: "#CBC3E3", fontSize: 13, fontWeight: 'bold', border: 2, p:"5px", mt:"50px", ml:"102px"}} variant="outlined" onClick={handleCloseModal}> Cancel </Button>
+        </Box>
+    </Modal>
     );
 }

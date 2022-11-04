@@ -7,6 +7,7 @@ import MoveSong_Transaction from '../transactions/MoveSong_Transaction'
 import RemoveSong_Transaction from '../transactions/RemoveSong_Transaction'
 import UpdateSong_Transaction from '../transactions/UpdateSong_Transaction'
 import AuthContext from '../auth'
+
 /*
     This is our global data store. Note that it uses the Flux design pattern,
     which makes use of things like actions and reducers. 
@@ -215,6 +216,22 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.tryAcessingOtherAccountPlaylist = function(){
+        let id = "635f203d2e072037af2e6284";
+        async function asyncSetCurrentList(id) {
+            let response = await api.getPlaylistById(id);
+            if (response.data.success) {
+                let playlist = response.data.playlist;
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: playlist
+                });
+            }
+        }
+        asyncSetCurrentList(id);
+        history.push("/playlist/635f203d2e072037af2e6284");
+    }
+
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
@@ -241,6 +258,7 @@ function GlobalStoreContextProvider(props) {
                                         playlist: playlist
                                     }
                                 });
+                                store.setCurrentList(id);
                             }
                         }
                         getListPairs(playlist);
@@ -351,6 +369,7 @@ function GlobalStoreContextProvider(props) {
         });        
     }
     store.hideModals = () => {
+        auth.errorMessage = null;
         storeReducer({
             type: GlobalStoreActionType.HIDE_MODALS,
             payload: {}
@@ -526,6 +545,19 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
+
+    function KeyPress(event) {
+        if (!store.modalOpen && event.ctrlKey){
+            if(event.key === 'z'){
+                store.undo();
+            } 
+            if(event.key === 'y'){
+                store.redo();
+            }
+        }
+    }
+  
+    document.onkeydown = (event) => KeyPress(event);
 
     return (
         <GlobalStoreContext.Provider value={{
