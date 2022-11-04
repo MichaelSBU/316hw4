@@ -3,17 +3,22 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
-const style = {
+const style1 = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    width: 345,
+    height: 250,
+    backgroundSize: "contain",
+    backgroundImage: `url(https://i.insider.com/602ee9ced3ad27001837f2ac?})`,
+    border: '3px solid #000',
+    padding: '20px',
     boxShadow: 24,
-    p: 4,
 };
 
 export default function MUIRemoveSongModal() {
@@ -37,37 +42,24 @@ export default function MUIRemoveSongModal() {
     }
 
     return (
-        <Modal maxWidth = {"800vh"} maxHeight = {"400vw"}
-            open={store.currentModal == "REMOVE_SONG"}
+        <Modal
+        open={store.currentModal === "REMOVE_SONG"}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
         >
-            <div
-        id="remove-song-modal"
-        className={modalClass}
-        data-animation="slideInOutLeft">
-        <div className="modal-root" id='verify-remove-song-root'>
-            <div className="modal-north">
-                Remove {songTitle}?
-            </div>
-            <div className="modal-center">
-                <div className="modal-center-content">
-                    Are you sure you wish to permanently remove {songTitle} from the playlist?
-                </div>
-            </div>
-            <div className="modal-south">
-                <input type="button" 
-                    id="remove-song-confirm-button" 
-                    className="modal-button" 
-                    onClick={handleConfirmRemoveSong} 
-                    value='Confirm' />
-                <input 
-                    type="button" 
-                    id="remove-song-cancel-button" 
-                    className="modal-button" 
-                    onClick={handleCancelRemoveSong} 
-                    value='Cancel' />
-            </div>
-        </div>
-    </div>
-        </Modal>
+        <Box sx={style1}>
+            <Typography sx={{fontWeight: 'bold'}} id="modal-modal-title" variant="h4" component="h2">
+                Delete Song
+            </Typography>
+            <Divider sx={{p: '10px', transform: 'translate(-5.5%, 0%)', width:368}}/>
+            <Box sx={{background: "rgb(172,79,198,0.05)"}}>
+            <Typography id="modal-modal-description" variant="h6" sx={{color: "#301974" ,fontWeight: 'bold', mt: 2}}>
+                Are you sure you want to remove the <Typography display="inline" id="modal-modal-description" variant="h6" sx={{color: "#820747CF" ,fontWeight: 'bold', mt: 2, textDecoration: 'underline'}}>{songTitle}</Typography> song?
+            </Typography>
+            </Box>
+            <Button sx={{opacity: 0.50, color: "#8932CC", backgroundColor: "#CBC3E3", fontSize: 13, fontWeight: 'bold', border: 2, p:"5px", mt:"50px", mr:"95px"}} variant="outlined" onClick={handleConfirmRemoveSong}> Confirm </Button>
+            <Button sx={{opacity: 0.50, color: "#8932CC", backgroundColor: "#CBC3E3", fontSize: 13, fontWeight: 'bold', border: 2, p:"5px", mt:"50px", ml:"102px"}} variant="outlined" onClick={handleCancelRemoveSong}> Cancel </Button>
+        </Box>
+    </Modal>
     );
 }
