@@ -37,7 +37,6 @@ export default function MUIDeleteModal() {
     return (
         <Modal
         open={store.listMarkedForDeletion !== null}
-        onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         >

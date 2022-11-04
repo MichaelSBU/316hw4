@@ -12,22 +12,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    height: 200,
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-const alertStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 800,
-    height: 400,
-    boxShadow: 24,
-    p: 4,
+    border: '5px solid yellow',
+    fontSize: "20px",
+    p: 4
 };
 
 
@@ -42,10 +31,9 @@ export default function MUIErrorModal() {
 
     return (
         <Modal open = {auth.errorMessage !== null}>
-        <Box sx={style}>
-         <Alert severity="warning">{auth.errorMessage}</Alert>
-         <Button variant="outlined" onClick={handleCloseButton}>Close</Button>
-         </Box>
+         <Alert sx={style} severity="warning">{auth.errorMessage}
+         <Button sx={{color:"black", mt:"20px", ml:"85px", fontSize: 13, fontWeight: 'bold', border: 2}}variant="outlined" onClick={handleCloseButton}>Close</Button>
+         </Alert>
         </Modal>
     );
 }
