@@ -24,14 +24,14 @@ function Statusbar() {
         text = store.currentList.name;
     return (
         <div id="playlister-statusbar">
-            <input type="button" 
-                    onClick={clickHandler} 
-                    value='clickyclicky' />
             {text}
         </div>
     );
     }
     return null;
 }
+/*<input type="button" 
+onClick={clickHandler} 
+value='clickyclicky' />*/
 
 export default Statusbar;
