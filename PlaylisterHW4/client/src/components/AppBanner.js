@@ -33,10 +33,6 @@ export default function AppBanner() {
         auth.logoutUser();
     }
 
-    const handleHouseClick = () => {
-        store.closeCurrentList();
-    }
-
     const menuId = 'primary-search-account-menu';
     const loggedOutMenu = (
         <Menu
@@ -105,7 +101,7 @@ export default function AppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link onClick={handleHouseClick} style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ height: "90px", display: { xs: 'none', md: 'flex' } }}>
