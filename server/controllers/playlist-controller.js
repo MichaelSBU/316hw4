@@ -1,5 +1,6 @@
 const Playlist = require('../models/playlist-model')
 const User = require('../models/user-model');
+const auth = require('../auth')
 /*
     This is our back-end API. It provides all the data services
     our database needs. Note that this file contains the controller
@@ -8,16 +9,20 @@ const User = require('../models/user-model');
     @author McKilla Gorilla
 */
 createPlaylist = (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     const body = req.body;
     console.log("createPlaylist body: " + JSON.stringify(body));
-
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a Playlist',
         })
     }
-
+    
     const playlist = new Playlist(body);
     console.log("playlist: " + playlist.toString());
     if (!playlist) {
@@ -46,6 +51,11 @@ createPlaylist = (req, res) => {
     })
 }
 deletePlaylist = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     console.log("delete Playlist with id: " + JSON.stringify(req.params.id));
     console.log("delete " + req.params.id);
     Playlist.findById({ _id: req.params.id }, (err, playlist) => {
@@ -79,6 +89,11 @@ deletePlaylist = async (req, res) => {
     })
 }
 getPlaylistById = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     console.log("Find Playlist with id: " + JSON.stringify(req.params.id));
 
     await Playlist.findById({ _id: req.params.id }, (err, list) => {
@@ -106,6 +121,11 @@ getPlaylistById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getPlaylistPairs = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     console.log("getPlaylistPairs");
     await User.findOne({ _id: req.userId }, (err, user) => {
         console.log("find user with id " + req.userId);
@@ -142,6 +162,11 @@ getPlaylistPairs = async (req, res) => {
     }).catch(err => console.log(err))
 }
 getPlaylists = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     await Playlist.find({}, (err, playlists) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -155,6 +180,11 @@ getPlaylists = async (req, res) => {
     }).catch(err => console.log(err))
 }
 updatePlaylist = async (req, res) => {
+    if(auth.verifyUser(req) === null){
+        return res.status(400).json({
+            errorMessage: 'UNAUTHORIZED'
+        })
+    }
     const body = req.body
     console.log("updatePlaylist: " + JSON.stringify(body));
     console.log("req.body.name: " + req.body.name);
